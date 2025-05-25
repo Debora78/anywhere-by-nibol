@@ -1,0 +1,85 @@
+/* Contenitore principale centrato su schermo */
+.signupWrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f6f6f6;
+  padding: 1rem;
+}
+
+/* Card centrale con ombra e bordi arrotondati */
+.signupCard {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+/* Titolo Signup */
+.signupTitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+/* Testo che invita al login */
+.loginText {
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+  text-align: left;
+}
+
+.loginText a {
+  font-weight: 600;
+  color: #000;
+  text-decoration: none;
+}
+
+/* Campi input */
+.inputField {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+/* Checkbox termini e condizioni */
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Bottone Create account */
+.signupButton {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #ff3c1a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.signupButton:hover {
+  background-color: #e63616;
+}
+
+/* Messaggio di feedback (esito registrazione) */
+.message {
+  margin-top: 1rem;
+  text-align: center;
+  color: #e74c3c;
+}
