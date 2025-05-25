@@ -1,4 +1,5 @@
 import { create } from "zustand"; // Importa la funzione principale di Zustand
+import { persist } from 'zustand/middleware' //  GIÀ incluso nel pacchetto
 
 // Definizione del tipo di  stato utente
 interface UserState {
