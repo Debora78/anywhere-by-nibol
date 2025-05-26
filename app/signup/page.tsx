@@ -12,21 +12,24 @@ import { registerUser } from "../services/auth";
 // Import del modulo CSS specifico per la pagina di signup
 import styles from "./signup.module.css";
 
-// Importa il componente
+// Importa componenti riutilizzabili
+// tasto termini e condizioni
 import TermsCheckbox from "@/components/TermsCheckbox";
-
+// barra di forza della password
 import PasswordStrengthBar from "@/components/PasswordStrengthBar";
 
 
 // Componente principale della pagina di registrazione
 export default function SignupPage() {
-  // Stato per ogni campo del form
+  // Stato per ogni campo input del form
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [acceptedTerms, setAcceptedTerms] = useState(false); // checkbox per i termini
-  const [message, setMessage] = useState(""); // messaggio di feedback
+
+   // Stato per la checkbox dei termini
+  const [acceptedTerms, setAcceptedTerms] = useState(false); 
+  
 
   // Stato per la forza della password (score, messaggio e colore)
   const [passwordStrength, setPasswordStrength] = useState<{
@@ -39,14 +42,17 @@ export default function SignupPage() {
     color: "",
   });
 
+  // Stato per il messaggio di feedback
+  const [message, setMessage] = useState(""); 
+
   // Funzione eseguita al submit del form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Previene il refresh automatico della pagina
 
-    // Verifica se l'utente ha accettato i termini
+    // Verifica se l'utente ha accettato i termini altrimenti blocco l'invio
     if (!acceptedTerms) {
-      setMessage("You must agree to the terms and conditions.");
-      return;
+      setMessage("You must agree to the terms and conditions."); // Messaggio di errore
+      return;// Blocca l’invio
     }
 
     try {
@@ -74,6 +80,7 @@ export default function SignupPage() {
         </p>
 
         <form onSubmit={handleSubmit}>
+           {/* Campo nome */}
           <input
             type="text"
             placeholder="First Name"
@@ -82,6 +89,7 @@ export default function SignupPage() {
             className={styles.inputField}
           />
 
+          {/* Campo cognome */}
           <input
             type="text"
             placeholder="Last Name"
@@ -90,6 +98,7 @@ export default function SignupPage() {
             className={styles.inputField}
           />
 
+          {/* Campo email */}
           <input
             type="email"
             placeholder="Email"
@@ -98,6 +107,7 @@ export default function SignupPage() {
             className={styles.inputField}
           />
 
+          {/* Campo password */}
           <input
             type="password"
             placeholder="Password"
@@ -125,11 +135,14 @@ export default function SignupPage() {
             onChange={() => setAcceptedTerms(!acceptedTerms)}
           />
 
-          <button type="submit" className={styles.signupButton}>
+
+          {/* Il bottone rimane disattivato fino a quando l'utente accetta i termini */}
+          <button type="submit" className={styles.signupButton} disabled={!acceptedTerms}> 
             Create account
           </button>
         </form>
 
+          {/* Mostra messaggi di errore/successo */}
         {message && <p className={styles.message}>{message}</p>}
       </div>
     </main>
