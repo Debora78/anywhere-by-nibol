@@ -12,6 +12,9 @@ import { registerUser } from "../services/auth";
 // Import del modulo CSS specifico per la pagina di signup
 import styles from "./signup.module.css";
 
+// Importa il componente
+import TermsCheckbox from "@/components/TermsCheckbox";
+
 // Componente principale della pagina di registrazione
 export default function SignupPage() {
   // Stato per ogni campo del form
@@ -45,7 +48,11 @@ export default function SignupPage() {
 
     try {
       // Invia i dati al backend
-      const data = await registerUser(`${firstName} ${lastName}`, email, password);
+      const data = await registerUser(
+        `${firstName} ${lastName}`,
+        email,
+        password
+      );
       setMessage("Account created successfully!");
       console.log(data); // debug
     } catch (error: unknown) {
@@ -117,18 +124,11 @@ export default function SignupPage() {
               </p>
             </div>
           )}
-
-          <div className={styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              id="terms"
-              checked={acceptedTerms}
-              onChange={() => setAcceptedTerms(!acceptedTerms)}
-            />
-            <label htmlFor="terms">
-              Agree to our <a href="#">Terms and Conditions</a>
-            </label>
-          </div>
+          {/* Checkbox per accettare i termini e condizioni */}
+          <TermsCheckbox
+            accepted={acceptedTerms}
+            onChange={() => setAcceptedTerms(!acceptedTerms)}
+          />
 
           <button type="submit" className={styles.signupButton}>
             Create account
