@@ -107,3 +107,19 @@
   margin-bottom: 1rem;
 }
 
+/* signup.module.css */
+
+/* Contenitore checkbox: spaziatura, layout e font */
+.checkboxContainer {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+/* Link ai termini */
+.checkboxContainer a {
+  text-decoration: underline;
+}
+
+
