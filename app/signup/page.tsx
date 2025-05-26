@@ -3,15 +3,18 @@
 // Import dei React hooks per gestire lo stato dei campi del form
 import { useState } from "react";
 
+// Funzione di utilità che valuta la forza della password
+import { getPasswordStrength } from "../../utils/passwordStrength";
+
 // Import della funzione che invia i dati al backend per la registrazione
 import { registerUser } from "../services/auth";
 
-// Import del modulo CSS per applicare lo stile specifico della pagina signup
+// Import del modulo CSS specifico per la pagina di signup
 import styles from "./signup.module.css";
 
 // Componente principale della pagina di registrazione
 export default function SignupPage() {
-  // Stato per ogni campo del form (nome, cognome, email, password)
+  // Stato per ogni campo del form
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,43 +22,48 @@ export default function SignupPage() {
   const [acceptedTerms, setAcceptedTerms] = useState(false); // checkbox per i termini
   const [message, setMessage] = useState(""); // messaggio di feedback
 
+  // Stato per la forza della password (score, messaggio e colore)
+  const [passwordStrength, setPasswordStrength] = useState<{
+    score: number;
+    message: string;
+    color: string;
+  }>({
+    score: 0,
+    message: "",
+    color: "",
+  });
+
   // Funzione eseguita al submit del form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Previene il refresh automatico della pagina
 
-    // Se non sono accettati i termini, mostra messaggio di errore
+    // Verifica se l'utente ha accettato i termini
     if (!acceptedTerms) {
       setMessage("You must agree to the terms and conditions.");
       return;
     }
 
     try {
-      // Esegue la registrazione chiamando il backend con nome completo, email e password
+      // Invia i dati al backend
       const data = await registerUser(`${firstName} ${lastName}`, email, password);
-      setMessage("Account created successfully!"); // Mostra messaggio positivo
-      console.log(data); // Log della risposta per debug
-    } catch (error: any) {
-      setMessage("Signup failed. Please try again."); // Mostra errore se la chiamata fallisce
-      console.error(error); // Log dell'errore
+      setMessage("Account created successfully!");
+      console.log(data); // debug
+    } catch (error: unknown) {
+      setMessage("Signup failed. Please try again.");
+      console.error(error); // debug errore
     }
   };
 
   return (
-    // Contenitore principale centrato e con sfondo chiaro
     <main className={styles.signupWrapper}>
-      {/* Card con sfondo bianco e bordi arrotondati */}
       <div className={styles.signupCard}>
-        {/* Titolo della pagina */}
         <h2 className={styles.signupTitle}>Signup</h2>
 
-        {/* Link per accedere se si ha già un account */}
         <p className={styles.loginText}>
           Already registered? <a href="/login">Login</a>
         </p>
 
-        {/* Form di registrazione */}
         <form onSubmit={handleSubmit}>
-          {/* Campo nome */}
           <input
             type="text"
             placeholder="First Name"
@@ -64,7 +72,6 @@ export default function SignupPage() {
             className={styles.inputField}
           />
 
-          {/* Campo cognome */}
           <input
             type="text"
             placeholder="Last Name"
@@ -73,7 +80,6 @@ export default function SignupPage() {
             className={styles.inputField}
           />
 
-          {/* Campo email */}
           <input
             type="email"
             placeholder="Email"
@@ -82,16 +88,36 @@ export default function SignupPage() {
             className={styles.inputField}
           />
 
-          {/* Campo password */}
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setPassword(value); // Aggiorna la password
+              setPasswordStrength(getPasswordStrength(value)); // Calcola la forza
+            }}
             className={styles.inputField}
           />
 
-          {/* Checkbox per accettare i termini e condizioni */}
+          {/* Barra visiva della forza della password */}
+          {password && (
+            <div className={styles.passwordStrength}>
+              <div
+                style={{
+                  width: `${(passwordStrength.score / 4) * 100}%`,
+                  height: "8px",
+                  backgroundColor: passwordStrength.color,
+                  borderRadius: "4px",
+                  transition: "width 0.3s ease",
+                }}
+              />
+              <p style={{ color: passwordStrength.color, fontSize: "0.85rem" }}>
+                {passwordStrength.message}
+              </p>
+            </div>
+          )}
+
           <div className={styles.checkboxContainer}>
             <input
               type="checkbox"
@@ -104,13 +130,11 @@ export default function SignupPage() {
             </label>
           </div>
 
-          {/* Bottone per inviare il form */}
           <button type="submit" className={styles.signupButton}>
             Create account
           </button>
         </form>
 
-        {/* Mostra il messaggio di feedback se presente */}
         {message && <p className={styles.message}>{message}</p>}
       </div>
     </main>

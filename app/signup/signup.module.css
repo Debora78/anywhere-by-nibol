@@ -83,3 +83,27 @@
   text-align: center;
   color: #e74c3c;
 }
+
+/* Contenitore della barra di forza */
+.strengthBarWrapper {
+  height: 6px;
+  background-color: #eee;
+  border-radius: 5px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+/* Barra colorata che indica la forza */
+.strengthBar {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Messaggio descrittivo della forza */
+.strengthMessage {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
