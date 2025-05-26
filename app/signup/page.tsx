@@ -15,6 +15,9 @@ import styles from "./signup.module.css";
 // Importa il componente
 import TermsCheckbox from "@/components/TermsCheckbox";
 
+import PasswordStrengthBar from "@/components/PasswordStrengthBar";
+
+
 // Componente principale della pagina di registrazione
 export default function SignupPage() {
   // Stato per ogni campo del form
@@ -107,23 +110,15 @@ export default function SignupPage() {
             className={styles.inputField}
           />
 
-          {/* Barra visiva della forza della password */}
+          {/* Mostra la barra della forza della password solo se l'utente ha iniziato a scrivere */}
           {password && (
-            <div className={styles.passwordStrength}>
-              <div
-                style={{
-                  width: `${(passwordStrength.score / 4) * 100}%`,
-                  height: "8px",
-                  backgroundColor: passwordStrength.color,
-                  borderRadius: "4px",
-                  transition: "width 0.3s ease",
-                }}
-              />
-              <p style={{ color: passwordStrength.color, fontSize: "0.85rem" }}>
-                {passwordStrength.message}
-              </p>
-            </div>
+            <PasswordStrengthBar
+              score={passwordStrength.score}
+              message={passwordStrength.message}
+              color={passwordStrength.color}
+            />
           )}
+
           {/* Checkbox per accettare i termini e condizioni */}
           <TermsCheckbox
             accepted={acceptedTerms}

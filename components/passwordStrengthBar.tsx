@@ -24,6 +24,7 @@ const PasswordStrengthBar: React.FC<PasswordStrengthBarProps> = ({ score, messag
             backgroundColor: color,         // Colore dinamico in base al punteggio
           }}
           role="progressbar"               // Accessibilità: indica barra di progresso
+          aria-label="Password strength"   // Etichetta per screen reader
           aria-valuenow={score}            // Valore attuale (score)
           aria-valuemin={0}                // Valore minimo possibile
           aria-valuemax={4}                // Valore massimo possibile
